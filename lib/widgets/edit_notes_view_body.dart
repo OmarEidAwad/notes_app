@@ -16,10 +16,10 @@ class EditNotesViewBody extends StatelessWidget {
           CustomAppBar(title: 'Edit Notes', icon: Icons.check),
           SizedBox(height: 22),
 
-          CustomTextField(hint: 'title'),
+          CustomFormTextField(hint: 'title'),
           SizedBox(height: 16),
 
-          CustomTextField(hint: " content", maxLines: 5),
+          CustomFormTextField(hint: " content", maxLines: 5),
         ],
       ),
     );
