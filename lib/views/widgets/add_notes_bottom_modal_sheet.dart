@@ -10,32 +10,35 @@ class AddBottomModalSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddNotesCubit(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: BlocConsumer<AddNotesCubit, AddNotesState>(
-          listener: (context, state) {
-            // TODO: implement listener
-            if (state is AddNotesSuccess) {
-              Navigator.pop(context);
-            }
-            if (state is AddNotesFailure) {
-              print('faileddddddddd ${state.errMessage}');
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content: Text(state.errMessage),
-              //   ),
-              // );
-            }
-          },
-          builder: (context, state) {
-            return Center(
-              child: AbsorbPointer(
-                absorbing: state is AddNotesLoading ? true : false,
-                child: SingleChildScrollView(child: AddFormNote()),
+      child: BlocConsumer<AddNotesCubit, AddNotesState>(
+        listener: (context, state) {
+          // TODO: implement listener
+          if (state is AddNotesSuccess) {
+            Navigator.pop(context);
+          }
+          if (state is AddNotesFailure) {
+            print('faileddddddddd ${state.errMessage}');
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   SnackBar(
+            //     content: Text(state.errMessage),
+            //   ),
+            // );
+          }
+        },
+        builder: (context, state) {
+          return AbsorbPointer(
+            // meke me can not edit in screen
+            absorbing: state is AddNotesLoading ? true : false,
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+                right: 16,
+                left: 16,
               ),
-            );
-          },
-        ),
+              child: SingleChildScrollView(child: AddFormNote()),
+            ),
+          );
+        },
       ),
     );
   }
