@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notesapp/cubits/all_notes_cubit/notes_cubit_cubit.dart';
 import 'package:notesapp/models/note_model.dart';
 import 'package:notesapp/views/edit_notes_view.dart';
 
 class NoteItem extends StatelessWidget {
   NoteItem({super.key, required this.notes});
-  NoteModel notes;
   @override
+  NoteModel notes;
+
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -45,7 +48,10 @@ class NoteItem extends StatelessWidget {
                   ),
                 ),
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    notes.delete();
+                    BlocProvider.of<NotesCubitCubit>(context).FetchAllNotes();
+                  },
                   icon: const Icon(Icons.delete, color: Colors.black, size: 35),
                 ),
               ),
