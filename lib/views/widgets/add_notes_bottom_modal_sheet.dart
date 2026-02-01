@@ -8,9 +8,10 @@ class AddBottomModalSheet extends StatelessWidget {
   const AddBottomModalSheet({super.key});
 
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SingleChildScrollView(
+    return BlocProvider(
+      create: (context) => AddNotesCubit(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: BlocConsumer<AddNotesCubit, AddNotesState>(
           listener: (context, state) {
             // TODO: implement listener
@@ -27,9 +28,11 @@ class AddBottomModalSheet extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            return ModalProgressHUD(
-              inAsyncCall: state is AddNotesLoading ? true : false,
-              child: AddFormNote(),
+            return Center(
+              child: ModalProgressHUD(
+                inAsyncCall: state is AddNotesLoading ? true : false,
+                child: SingleChildScrollView(child: AddFormNote()),
+              ),
             );
           },
         ),
