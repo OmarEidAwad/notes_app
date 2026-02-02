@@ -15,6 +15,15 @@ class EditNotesViewBody extends StatefulWidget {
 
 class _EditNotesViewBodyState extends State<EditNotesViewBody> {
   String? title, content;
+  late TextEditingController titleController;
+  late TextEditingController contentController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    titleController = TextEditingController(text: widget.note.title);
+    contentController = TextEditingController(text: widget.note.content);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +47,7 @@ class _EditNotesViewBodyState extends State<EditNotesViewBody> {
           SizedBox(height: 22),
 
           CustomFormTextField(
+            controller: titleController,
             onChanged: (value) {
               title = value;
             },
@@ -46,6 +56,7 @@ class _EditNotesViewBodyState extends State<EditNotesViewBody> {
           SizedBox(height: 16),
 
           CustomFormTextField(
+            controller: contentController,
             onChanged: (value) {
               content = value;
             },

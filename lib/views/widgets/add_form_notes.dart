@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:notesapp/cubits/add_note_cubit/cubit/add_notes_cubit.dart';
 import 'package:notesapp/models/note_model.dart';
+import 'package:notesapp/views/widgets/color_list_view.dart';
 import 'package:notesapp/views/widgets/custom_button.dart';
 import 'package:notesapp/views/widgets/custom_text_feld.dart';
 
@@ -19,6 +20,23 @@ class _AddFormNoteState extends State<AddFormNote> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   String? title, Subtittle;
+  late TextEditingController titleController;
+  late TextEditingController SubtittleController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    titleController = TextEditingController();
+    SubtittleController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    titleController.dispose();
+    SubtittleController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +46,20 @@ class _AddFormNoteState extends State<AddFormNote> {
       child: Column(
         children: [
           SizedBox(height: 32),
-          CustomFormTextField(hint: 'title', onSaved: (value) => title = value),
+          CustomFormTextField(
+            controller: titleController,
+            hint: 'title',
+            onSaved: (value) => title = value,
+          ),
           SizedBox(height: 16),
           CustomFormTextField(
+            controller: SubtittleController,
             hint: 'content',
             maxLines: 5,
             onSaved: (value) => Subtittle = value,
           ),
           SizedBox(height: 32),
+          const ColorsListView(),
           BlocBuilder<AddNotesCubit, AddNotesState>(
             builder: (context, state) {
               return CustomButton(
